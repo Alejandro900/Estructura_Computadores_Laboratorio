@@ -34,19 +34,18 @@
 
     # Compara los números para encontrar el mayor
     # Suponemos que $t0 es el número mayor inicialmente
-    bgt $t1, $t0, mayor1
-    bgt $t2, $t0, mayor2
-
-    # Si ninguno de los saltos se ejecutó, $t0 es el mayor
-    jal imprimir_mayor
-    j fin
+    blt $t1, $t0, mayor1
+    move $t0, $t1  # $t1 es el nuevo número mayor
+    j mayor2
 
 mayor1:
-    move $t0, $t1  # $t1 es el nuevo número mayor
-    j imprimir_mayor
+    blt $t2, $t0, mayor2
+    move $t0, $t2  # $t2 es el nuevo número mayor
 
 mayor2:
-    move $t0, $t2  # $t2 es el nuevo número mayor
+    # Ahora $t0 contiene el número mayor
+    jal imprimir_mayor
+    j fin
 
 imprimir_mayor:
     # Imprime el número mayor
